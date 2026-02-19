@@ -3,10 +3,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example</groupId>
-  <artifactId>demo</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>demo</name>
-  <description>A dynamic, configuration-driven object mapper for Java, with a local config generator.</description>
+  <artifactId>configurable-model-mapper</artifactId>
+  <version>1.0.0</version>
+  <name>Configurable Model Mapper</name>
+  <description>A dynamic, configuration-driven object mapper for Java.</description>
   <properties>
     <java.version>1.8</java.version>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -73,11 +73,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
-          <mainClass>com.example.ConfigGenerator</mainClass>
-          <arguments>
-            <argument>src/main/java/com/example/Person.java</argument>
-            <argument>src/main/java/com/example/Persoon.java</argument>
-          </arguments>
+          <mainClass>com.example.Application</mainClass>
         </configuration>
       </plugin>
       <plugin>

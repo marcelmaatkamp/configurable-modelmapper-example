@@ -1,4 +1,4 @@
-package com.example;
+package com.example.models;
 
 public class Address {
     private String street;

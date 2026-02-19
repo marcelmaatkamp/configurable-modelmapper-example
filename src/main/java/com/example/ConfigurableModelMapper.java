@@ -18,14 +18,14 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class UniversalMapper {
+public class ConfigurableModelMapper {
 
-    private static final Logger logger = LoggerFactory.getLogger(UniversalMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConfigurableModelMapper.class);
     private final ModelMapper modelMapper;
     private final Map<Class<?>, Map<String, Field>> fieldCache = new ConcurrentHashMap<>();
     private List<String> mappablePackages = new ArrayList<>();
 
-    public UniversalMapper(String configPath) throws ConfigurationException {
+    public ConfigurableModelMapper(String configPath) throws ConfigurationException {
         this.modelMapper = new ModelMapper();
 
         modelMapper.getConfiguration()
@@ -145,6 +145,11 @@ public class UniversalMapper {
     private void setReflectionValue(Object dest, String fieldName, Object value) throws FieldNotFoundException, IllegalAccessException {
         Field field = findField(dest.getClass(), fieldName);
         field.setAccessible(true);
+
+        if (field.getType().isEnum() && value instanceof String) {
+            value = Enum.valueOf((Class<Enum>) field.getType(), (String) value);
+        }
+
         field.set(dest, value);
     }
 
@@ -190,45 +195,5 @@ public class UniversalMapper {
             results.add(map(element, targetClass));
         }
         return results;
-    }
-
-    public static void main(String[] args) {
-        try {
-            // Now uses the classpath resource, as before
-            UniversalMapper myMapper = new UniversalMapper("config.json");
-            logger.info("Configuration loaded successfully!");
-
-            logger.info("--- Single Object Mapping Test ---");
-            Address address = new Address("Main St", "Anytown");
-            Person p = new Person("Jan", "Jansen", address);
-            logger.info("Source: {}", p);
-
-            Persoon result = myMapper.map(p, Persoon.class);
-
-            logger.info("Target: {}", result);
-            logger.info("Single object mapping successful!");
-
-            logger.info("\n--- Collection Mapping Test ---");
-            List<Person> personList = Arrays.asList(
-                    new Person("Piet", "Pietersen", new Address("Second St", "Othertown")),
-                    new Person("Klaas", "Klaassen", new Address("Third Ave", "Anotherville"))
-            );
-
-            logger.info("Source List:");
-            personList.forEach(person -> logger.info("  {}", person));
-
-            List<Persoon> persoonListResult = myMapper.map(personList, Persoon.class);
-
-            logger.info("Target List:");
-            persoonListResult.forEach(persoon -> logger.info("  {}", persoon));
-            logger.info("Collection mapping successful!");
-
-        } catch (ConfigurationException e) {
-            logger.error("Configuration Error: {}", e.getMessage(), e);
-        } catch (MappingException e) {
-            logger.error("Mapping Error: {}", e.getMessage(), e);
-        } catch (Exception e) {
-            logger.error("An unexpected error occurred in the UniversalMapper main method", e);
-        }
     }
 }

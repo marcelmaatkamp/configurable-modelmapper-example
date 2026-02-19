@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UniversalMapperTest {
+class ConfigurableModelMapperTest {
 
     private final String CONFIG_PATH = "target/test-classes/test-config.json";
 
@@ -60,7 +60,7 @@ class UniversalMapperTest {
                 "}";
         createConfigFile(config);
 
-        UniversalMapper mapper = new UniversalMapper(CONFIG_PATH);
+        ConfigurableModelMapper mapper = new ConfigurableModelMapper(CONFIG_PATH);
         Person source = new Person("John", "Doe", new Address("123 Main St", "Anytown"));
 
         Persoon target = mapper.map(source, Persoon.class);
@@ -78,7 +78,7 @@ class UniversalMapperTest {
     void shouldThrowConfigurationException_whenConfigFileIsNotFound() {
         String nonExistentPath = "non/existent/path.json";
         ConfigurationException exception = assertThrows(ConfigurationException.class, () -> {
-            new UniversalMapper(nonExistentPath);
+            new ConfigurableModelMapper(nonExistentPath);
         });
 
         // Updated assertion to match the new, more descriptive error message
@@ -103,7 +103,7 @@ class UniversalMapperTest {
         createConfigFile(config);
 
         ConfigurationException exception = assertThrows(ConfigurationException.class, () -> {
-            new UniversalMapper(CONFIG_PATH);
+            new ConfigurableModelMapper(CONFIG_PATH);
         });
 
         assertTrue(exception.getCause() instanceof FieldNotFoundException);
