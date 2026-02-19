@@ -1,0 +1,22 @@
+{
+  "mappablePackages": ["com.example"],
+  "mappings": [
+    {
+      "sourceClass": "com.example.Person",
+      "targetClass": "com.example.Persoon",
+      "fields": {
+        "firstName": "voornaam",
+        "lastName": "achternaam",
+        "address": "adres"
+      }
+    },
+    {
+      "sourceClass": "com.example.Address",
+      "targetClass": "com.example.Adres",
+      "fields": {
+        "street": "straat",
+        "city": "stad"
+      }
+    }
+  ]
+}
