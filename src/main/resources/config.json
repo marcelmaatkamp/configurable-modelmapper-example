@@ -1,9 +1,9 @@
 {
-  "mappablePackages": ["com.example"],
+  "mappablePackages": ["com.example.models"],
   "mappings": [
     {
-      "sourceClass": "com.example.Person",
-      "targetClass": "com.example.Persoon",
+      "sourceClass": "com.example.models.Person",
+      "targetClass": "com.example.models.Persoon",
       "fields": {
         "firstName": "voornaam",
         "lastName": "achternaam",
@@ -11,8 +11,8 @@
       }
     },
     {
-      "sourceClass": "com.example.Address",
-      "targetClass": "com.example.Adres",
+      "sourceClass": "com.example.models.Address",
+      "targetClass": "com.example.models.Adres",
       "fields": {
         "street": "straat",
         "city": "stad"
