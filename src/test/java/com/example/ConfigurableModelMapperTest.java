@@ -1,16 +1,17 @@
 package com.example;
 
+import com.example.models.Address;
+import com.example.models.Adres;
+import com.example.models.Person;
+import com.example.models.Persoon;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +21,6 @@ class ConfigurableModelMapperTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        // Ensure the directory exists
         Files.createDirectories(Paths.get(CONFIG_PATH).getParent());
     }
 
@@ -37,11 +37,11 @@ class ConfigurableModelMapperTest {
     @DisplayName("Should map single object when config is valid")
     void shouldMapSingleObject_whenConfigIsValid() throws IOException, ConfigurationException, MappingException {
         String config = "{\n" +
-                "  \"mappablePackages\": [\"com.example\"],\n" +
+                "  \"mappablePackages\": [\"com.example.models\"],\n" +
                 "  \"mappings\": [\n" +
                 "    {\n" +
-                "      \"sourceClass\": \"com.example.Person\",\n" +
-                "      \"targetClass\": \"com.example.Persoon\",\n" +
+                "      \"sourceClass\": \"com.example.models.Person\",\n" +
+                "      \"targetClass\": \"com.example.models.Persoon\",\n" +
                 "      \"fields\": {\n" +
                 "        \"firstName\": \"voornaam\",\n" +
                 "        \"lastName\": \"achternaam\",\n" +
@@ -49,8 +49,8 @@ class ConfigurableModelMapperTest {
                 "      }\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"sourceClass\": \"com.example.Address\",\n" +
-                "      \"targetClass\": \"com.example.Adres\",\n" +
+                "      \"sourceClass\": \"com.example.models.Address\",\n" +
+                "      \"targetClass\": \"com.example.models.Adres\",\n" +
                 "      \"fields\": {\n" +
                 "        \"street\": \"straat\",\n" +
                 "        \"city\": \"stad\"\n" +
@@ -81,7 +81,6 @@ class ConfigurableModelMapperTest {
             new ConfigurableModelMapper(nonExistentPath);
         });
 
-        // Updated assertion to match the new, more descriptive error message
         assertTrue(exception.getMessage().contains("Resource not found on file system or classpath"));
     }
 
@@ -89,11 +88,11 @@ class ConfigurableModelMapperTest {
     @DisplayName("Should throw FieldNotFoundException for invalid field in config")
     void shouldThrowFieldNotFoundException_forInvalidFieldInConfig() throws IOException {
         String config = "{\n" +
-                "  \"mappablePackages\": [\"com.example\"],\n" +
+                "  \"mappablePackages\": [\"com.example.models\"],\n" +
                 "  \"mappings\": [\n" +
                 "    {\n" +
-                "      \"sourceClass\": \"com.example.Person\",\n" +
-                "      \"targetClass\": \"com.example.Persoon\",\n" +
+                "      \"sourceClass\": \"com.example.models.Person\",\n" +
+                "      \"targetClass\": \"com.example.models.Persoon\",\n" +
                 "      \"fields\": {\n" +
                 "        \"invalidField\": \"voornaam\"\n" +
                 "      }\n" +
