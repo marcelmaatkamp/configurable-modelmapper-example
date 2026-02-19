@@ -3,6 +3,8 @@
 This project demonstrates a dynamic, configuration-driven object mapper for Java. It allows you to map objects of different classes based on a JSON configuration file, providing flexibility and avoiding hardcoded mapping logic.
 
 The core of the project is the `UniversalMapper` class, which takes a source object, a destination class, and a configuration file path to perform the mapping. The configuration file specifies which fields in the source object map to which fields in the destination object.
+## Getting Started
+>>>>>>> dce096192ee1525d48f152d6be1b7e2a61be3e25
 
 A `ConfigGenerator` class is also included to automatically generate a basic configuration file by inspecting the fields of the source and destination classes.
 
